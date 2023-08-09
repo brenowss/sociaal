@@ -9,9 +9,16 @@ import morgan from 'morgan';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import authRoutes from './routes/auth.js';
+import usersRoutes from './routes/users.js';
+import postRoutes from './routes/post.js';
+
+import User from './models/User.js';
+import Post from './models/Post.js';
+import { users, posts } from './mock/index.js';
 
 import { register } from './controllers/auth.js';
 import { verifyToken } from './middleware/auth.js';
+import { createPost } from './controllers/post.js';
 
 // CONFIGURATIONS
 const __filename = fileURLToPath(import.meta.url);
@@ -41,10 +48,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // ROUTES
-app.post('/auth/register', upload.single('picture'), verifyToken, register);
+app.post('/auth/register', upload.single('picture'), register);
+app.post('/post', verifyToken, upload.single('picture'), createPost);
 
 app.use('/auth', authRoutes);
-app.use('/users');
+app.use('/users', usersRoutes);
+app.use('/post', postRoutes);
 
 // MONGOOSE
 const PORT = process.env.PORT || 5001;
@@ -53,4 +62,9 @@ mongoose
   .then(() => {
     app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
   })
+  // USE THIS TO SEED THE DATABASE
+  // .then(() => {
+  //   User.insertMany(users);
+  //   Post.insertMany(posts);
+  // })
   .catch((error) => console.log(error.message));
