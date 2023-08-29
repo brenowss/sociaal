@@ -6,10 +6,11 @@ import { persistor, store } from '../redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
+  console.log('providers loaded');
   return (
     <ReduxProvider store={store}>
       <PersistGate persistor={persistor} loading={null}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider defaultTheme="light">{children}</ThemeProvider>
       </PersistGate>
     </ReduxProvider>
   );
