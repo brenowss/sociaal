@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function Banner() {
   return (
-    <div className="h-screen flex-1 overflow-hidden rounded-s-3xl">
+    <div className="h-screen flex-1 overflow-hidden rounded-s-3xl max-lg:hidden">
       <Image
         src="/lighthouse.jpg"
         alt="Lighthouse"
