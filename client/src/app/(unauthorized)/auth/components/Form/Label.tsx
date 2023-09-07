@@ -14,7 +14,7 @@ export default function Label({
 }: LabelProps) {
   return (
     <RLabel.Root
-      className={clsx('text-[15px] font-medium text-zinc-800', className)}
+      className={clsx('text-md font-medium text-zinc-700', className)}
       htmlFor={id}
       {...props}
     >

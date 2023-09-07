@@ -13,6 +13,7 @@ import storage from 'redux-persist/lib/storage';
 import authReducer from './features/authSlice';
 import postsReducer from './features/postsSlice';
 import friendsReducer from './features/friendsSlice';
+import registerReducer from './features/registerSlice';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
 const persistConfig = {
@@ -30,6 +31,7 @@ export const store = configureStore({
     authReducer: persistedAuthReducer,
     postsReducer: persistedPostsReducer,
     friendsReducer: persistedFriendsReducer,
+    registerReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

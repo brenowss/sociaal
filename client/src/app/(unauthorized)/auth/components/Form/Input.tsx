@@ -27,7 +27,7 @@ export default function Input({
     <div className="relative">
       <input
         className={clsx(
-          'bg-transparent shadow-zinc-800 inline-flex h-[35px] w-[200px] appearance-none items-center justify-center rounded-[4px] px-[10px] text-[15px] leading-none shadow-[0_0_0_1px] outline-none focus:shadow-[0_0_0_2px_black]',
+          'bg-transparent shadow-zinc-600 inline-flex h-[35px] w-[200px] appearance-none items-center justify-center rounded-[4px] px-[10px] text-md leading-none shadow-[0_0_0_1px] outline-none focus:shadow-[0_0_0_2px_black]',
           className
         )}
         type={canHideShow && isHidden ? 'password' : 'text'}
