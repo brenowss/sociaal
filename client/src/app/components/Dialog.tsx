@@ -35,7 +35,7 @@ const Dialog = ({ trigger, description, title, children }: DialogProps) => {
             <motion.div
               className={clsx(
                 'fixed z-50',
-                'w-[95vw] max-w-md rounded-lg p-4 md:w-full',
+                'w-[95vw] max-w-md max-h-[90vh] overflow-auto custom-scrollbar rounded-lg p-4 md:w-full',
                 'top-1/2 left-1/2',
                 'bg-white',
                 'focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75'
