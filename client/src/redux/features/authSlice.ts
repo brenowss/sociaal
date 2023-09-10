@@ -12,8 +12,8 @@ type AuthState = {
     occupation: string;
     viewedProfile: number;
     impressions: number;
-    createdAt: number;
-    updatedAt: number;
+    createdAt: string;
+    updatedAt: string;
   };
   token?: string;
 };

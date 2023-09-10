@@ -37,9 +37,20 @@ export const RegisterSlice = createSlice({
       const { field, value } = action.payload;
       state.value[field] = value;
     },
+    clearRegisteringFields: (state) => {
+      state.value = {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        picturePath: '',
+        location: '',
+        occupation: '',
+      };
+    },
   },
 });
 
-export const { setField } = RegisterSlice.actions;
+export const { setField, clearRegisteringFields } = RegisterSlice.actions;
 
 export default RegisterSlice.reducer;

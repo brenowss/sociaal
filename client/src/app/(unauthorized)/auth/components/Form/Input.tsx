@@ -41,7 +41,7 @@ export default function Input({
       {canHideShow && (
         <button
           type="button"
-          className="absolute right-1 top-1/2 -translate-x-1/2"
+          className="absolute right-1 top-1/2 transform -translate-y-1/2"
           onClick={() => setIsHidden((prevState) => !prevState)}
         >
           {isHidden ? <Eye /> : <EyeSlash />}

@@ -3,8 +3,13 @@ import { motion } from 'framer-motion';
 import * as FormComponent from '../Form';
 import * as Steps from './steps';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../../../redux/store';
-import { setField } from '../../../../../redux/features/registerSlice';
+import { AppDispatch, useAppSelector } from '../../../../../redux/store';
+import {
+  clearRegisteringFields,
+  setField,
+} from '../../../../../redux/features/registerSlice';
+import { useRouter } from 'next/navigation';
+import { setUser } from '../../../../../redux/features/authSlice';
 
 interface StepProps {
   step: number;
@@ -104,15 +109,34 @@ function CheckIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
 }
 
 export default function Page() {
-  const [step, setStep] = useState(1);
-  const [prevStep, setPrevStep] = useState(1);
+  type stepRefType = {
+    submit: () => boolean;
+  };
+
+  const [step, setStep] = useState<number>(1);
+  const [prevStep, setPrevStep] = useState<number>(1);
   const formRef = useRef<HTMLFormElement>(null);
+  const step1Ref = useRef<stepRefType>(null);
+  const step2Ref = useRef<stepRefType>(null);
+  const step3Ref = useRef<stepRefType>(null);
 
   const dispatch = useDispatch<AppDispatch>();
+  const { push } = useRouter();
+
+  const {
+    email,
+    firstName,
+    lastName,
+    password,
+    location,
+    occupation,
+    picturePath,
+  } = useAppSelector((state) => state.registerReducer.value);
 
   const content = [
     <Steps.Step1
       key={1}
+      ref={step1Ref}
       dispatch={({ field, value }) =>
         dispatch(
           setField({
@@ -124,6 +148,7 @@ export default function Page() {
     />,
     <Steps.Step2
       key={2}
+      ref={step2Ref}
       dispatch={({ field, value }) =>
         dispatch(
           setField({
@@ -135,6 +160,7 @@ export default function Page() {
     />,
     <Steps.Step3
       key={3}
+      ref={step3Ref}
       dispatch={({ field, value }) =>
         dispatch(
           setField({
@@ -144,7 +170,68 @@ export default function Page() {
         )
       }
     />,
+    <Steps.Step4 key={4} />,
   ];
+
+  const handleSubmit = () => {
+    switch (step) {
+      case 1:
+        if (step1Ref.current) {
+          const isValid = step1Ref.current.submit();
+
+          if (isValid) {
+            setStep(2);
+          }
+        }
+        break;
+
+      case 2:
+        if (step2Ref.current) {
+          step2Ref.current.submit();
+
+          setStep(3);
+        }
+        break;
+
+      case 3:
+        if (step3Ref.current) {
+          const isValid = step3Ref.current.submit();
+
+          if (isValid) {
+            setStep(4);
+            dispatch(
+              setUser({
+                user: {
+                  firstName,
+                  lastName,
+                  email,
+                  createdAt: new Date().toISOString(),
+                  updatedAt: new Date().toISOString(),
+                  friends: [],
+                  impressions: 10,
+                  location,
+                  occupation,
+                  password,
+                  picturePath: 'https://i.imgur.com/1OeQZ1o.png',
+                  viewedProfile: 99,
+                },
+                token: '123456',
+              })
+            );
+          }
+        }
+        break;
+
+      case 4:
+        dispatch(clearRegisteringFields());
+        push('/');
+        break;
+
+      default:
+        setStep(1);
+        break;
+    }
+  };
 
   useEffect(() => {
     setPrevStep(step);
@@ -167,6 +254,7 @@ export default function Page() {
             <Step step={1} currentStep={step} />
             <Step step={2} currentStep={step} />
             <Step step={3} currentStep={step} />
+            <Step step={4} currentStep={step} />
           </div>
           <div className="px-8 pb-8">
             <div className="overflow-hidden">
@@ -194,11 +282,11 @@ export default function Page() {
               <FormComponent.SubmitButton
                 onClick={(e) => {
                   e.preventDefault();
-                  setStep(step > 3 ? step : step + 1);
+                  handleSubmit();
                 }}
-                className="!rounded-full py-3 font-semibold bg-green-400 hover:bg-green-500 text-white"
+                className="!rounded-full py-3 font-semibold bg-green-400 hover:bg-green-500 transition-colors text-white"
               >
-                Continuar
+                {step === 4 ? 'Finalizar' : 'Continuar'}
               </FormComponent.SubmitButton>
             </div>
           </div>
