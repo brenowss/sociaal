@@ -31,11 +31,11 @@ export default function Navbar() {
           <h1 className="font-bold text-white text-3xl">Sociaal</h1>
         </div>
       </div>
-      <div className="flex items-center rounded-full text-white bg-zinc-800 bg-opacity-70 px-3 py-1 focus-within:shadow-lg focus:shadow-zinc-200 transition-all">
+      <div className="flex items-center rounded-full text-white bg-zinc-800 bg-opacity-70 px-3 py-1 focus-within:shadow-lg focus:shadow-zinc-200 transition-all w-full max-w-sm">
         <input
           type="text"
           placeholder="Buscar..."
-          className="bg-transparent placeholder:text-zinc-100 placeholder:transition-all placeholder:opacity-40 focus:placeholder:opacity-80 focus:outline-none"
+          className="bg-transparent placeholder:text-zinc-100 placeholder:transition-all placeholder:opacity-40 focus:placeholder:opacity-80 focus:outline-none w-full"
         />
         <MagnifyingGlass size={20} />
       </div>

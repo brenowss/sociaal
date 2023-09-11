@@ -10,7 +10,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <Navbar />
-      <main>{children}</main>
+      <main className="p-8">{children}</main>
     </div>
   );
 }
